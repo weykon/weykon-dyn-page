@@ -1,7 +1,14 @@
 import { getSupabase } from "@/server.supabse";
 import { revalidatePath } from "next/cache";
 import { redirect } from 'next/navigation'
-const NewPost = async () => {
+
+type Props = {
+    params: {
+        user: string,
+    }
+}
+
+const NewPost = async (props: Props) => {
 
     const handleSubmit = async (e: FormData) => {
         'use server'
@@ -15,9 +22,10 @@ const NewPost = async () => {
         }).single();
 
         if (!error) {
-            const {data,error}=await supabase.from('posts').select('id').order('created_at', { ascending: false }).eq('owner', user?.id).single();
-            if(!error){
-                redirect(`${user?.id}/posts/${data?.id}`)
+            const { data, error } = await supabase.from('posts').select('id').order('created_at', { ascending: false }).eq('owner', user?.id).limit(1);
+
+            if (!error) {
+                redirect(`${props.params.user}/posts/${data[0]?.id}`)
             }
         }
     }

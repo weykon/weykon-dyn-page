@@ -6,7 +6,7 @@ export default function TopBar() {
   const supabase = useSupabaseClient();
   const user = useUser();
   const router = useRouter();
-
+  
   const handleLogin = async () => {
     router.push('/auth')
     // await supabase.auth.signInWithPassword({

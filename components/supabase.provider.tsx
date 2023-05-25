@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { Session } from "@supabase/supabase-js";
-import { SessionContextProvider, useUser } from "@supabase/auth-helpers-react";
+import { SessionContextProvider, useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { Database } from "@/lib/database.types";
 
 export default function SupabaseProvider({
   children,
@@ -30,7 +31,40 @@ export default function SupabaseProvider({
 
   return (
     <SessionContextProvider supabaseClient={supabase} >
-      {children}
+      <UserProfileProvider>
+        {children}
+      </UserProfileProvider>
     </SessionContextProvider>
+  );
+}
+
+const UserPublicProfileContext = createContext<Database['public']['Tables']['users']['Row'] | null>(null);
+
+export const useUserProfile = () => {
+  const context = useContext(UserPublicProfileContext);
+  if (context === undefined) {
+    throw new Error('useUserProfile must be used within a UserProfileProvider')
+  }
+  return context
+}
+
+const UserProfileProvider = ({ children }: { children: React.ReactNode }) => {
+  const [userProfile, setUserProfile] = useState<Database['public']['Tables']['users']['Row'] | null>(null);
+  const supabase = useSupabaseClient();
+  const user = useUser();
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await supabase.from('users').select('*').eq('id', user?.id).single();
+      if (!error) {
+        setUserProfile(data as any)
+      } else {
+        setUserProfile(null)
+      }
+    })()
+  }, [user])
+  return (
+    <UserPublicProfileContext.Provider value={userProfile}>
+      {children}
+    </UserPublicProfileContext.Provider>
   );
 }

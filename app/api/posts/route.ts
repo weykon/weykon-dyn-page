@@ -4,33 +4,33 @@ import { headers, cookies } from "next/headers";
 
 import type { Database } from "@/lib/database.types";
 
-export async function POST(request: Request) {
-  console.log('it is passing here')
-  const { content } = await request.json();
+// export async function POST(request: Request) {
+//   console.log('it is passing here')
+//   const { content } = await request.json();
 
-  const supabase = createRouteHandlerSupabaseClient<Database>({
-    headers,
-    cookies,
-  });
+//   const supabase = createRouteHandlerSupabaseClient<Database>({
+//     headers,
+//     cookies,
+//   });
 
-  const { data } = await supabase.from("posts").insert({ content }).select();
+//   const { data } = await supabase.from("posts").insert({ content }).select();
 
-  return NextResponse.json(data);
-}
+//   return NextResponse.json(data);
+// }
 
-export async function PUT(request: Request) {
-  const { id, content } = await request.json();
+// export async function PUT(request: Request) {
+//   const { id, content } = await request.json();
 
-  const supabase = createRouteHandlerSupabaseClient<Database>({
-    headers,
-    cookies,
-  });
+//   const supabase = createRouteHandlerSupabaseClient<Database>({
+//     headers,
+//     cookies,
+//   });
 
-  const { data } = await supabase
-    .from("posts")
-    .update({ content })
-    .match({ id })
-    .select();
+//   const { data } = await supabase
+//     .from("posts")
+//     .update({ content })
+//     .match({ id })
+//     .select();
 
-  return NextResponse.json(data);
-}
+//   return NextResponse.json(data);
+// }

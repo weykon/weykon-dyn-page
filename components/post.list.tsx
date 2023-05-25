@@ -14,10 +14,10 @@ const PostList = ({ posts }: { posts: Partial<Post>[] }) => {
     }
 
     return (
-        <ul className="">
+        <ul className="w-full text-left">
             {
                 user && posts?.map((post: any) => (
-                    <li className="hover:bg-slate-300"
+                    <li className="hover:bg-slate-300 mt-5 mb-5 border-zinc-300 rounded-md border-2 mr-20 ml-20"
                         key={post.id}
                         onClick={() => jumpToPost(post.id)}
                     >

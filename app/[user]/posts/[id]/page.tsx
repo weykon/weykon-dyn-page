@@ -2,7 +2,8 @@ import PostContent from "@/components/post.markdown.content";
 import { Database } from "@/lib/database.types";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { headers, cookies } from "next/headers";
-import Markdown from "react-markdown"
+import Link from "next/link";
+
 
 type Props = {
     params: {
@@ -23,11 +24,11 @@ const PostPage = async (props: Props) => {
     const { data } = await supabase.auth.getSession();
 
     return (
-        <div>
+        <div className="text-center items-center justify-center w-full"> 
             {
                 data.session ?
                     <>
-                        <p className="text-3xl text-center">
+                        <p className="text-3xl text-cente">
                             {post?.title}
                         </p>
                         <PostContent post={post ?? {}} />
@@ -37,6 +38,7 @@ const PostPage = async (props: Props) => {
                         <p>Your had no permission to this post, please login</p>
                     </>
             }
+            <Link className={'fixed bottom-0 text-center justify-center'} href={`${props.params.user}/posts`}>back to Posts</Link>
         </div>
     )
 }
