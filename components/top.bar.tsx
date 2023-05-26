@@ -6,13 +6,9 @@ export default function TopBar() {
   const supabase = useSupabaseClient();
   const user = useUser();
   const router = useRouter();
-  
+
   const handleLogin = async () => {
     router.push('/auth')
-    // await supabase.auth.signInWithPassword({
-    //   email: "test@weykon.com",
-    //   password: "test@weykon.com",
-    // });
   };
 
   const handleLogout = async () => {
@@ -20,17 +16,21 @@ export default function TopBar() {
   };
 
   return (
-    <div className={'h-10 flex justify-between bg-gradient-to-bl from-cyan-500 to-blue-500 items-center  w-full'}>
-      {
-        user ?
-          <button onClick={handleLogout} className='text-center w-full'>Logout</button>
-          :
-          <button onClick={handleLogin}
-            className='text-center w-full'
-          >
-            Join as a User
-          </button>
-      }
+    <div className="relative">
+      <div className={'absolute blur-md bg-gradient-to-r from-slate-300 to-slate-500 h-10 flex w-full dark:to-slate-700 dark:from-slate-400'} />
+      <div className=" justify-center items-center backdrop-blur-md  h-10 flex">
+        {
+          user ?
+            <button onClick={handleLogout} className='text-center w-full h-full text-neutral-200'>Logout</button>
+            :
+            <button onClick={handleLogin}
+              className='text-center w-full'
+            >
+              Join as a User
+            </button>
+            
+        }
+      </div>
     </div>
   );
 }

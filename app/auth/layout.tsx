@@ -6,7 +6,7 @@ export default function AuthPage({
     children: React.ReactNode;
 }) {
     return (
-        <div className="">
+        <div className="my-10">
             {
                 children
             }

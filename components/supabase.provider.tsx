@@ -54,11 +54,13 @@ const UserProfileProvider = ({ children }: { children: React.ReactNode }) => {
   const user = useUser();
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase.from('users').select('*').eq('id', user?.id).single();
-      if (!error) {
-        setUserProfile(data as any)
-      } else {
-        setUserProfile(null)
+      if(user){
+        const { data, error } = await supabase.from('users').select('*').eq('id', user?.id);
+        if (!error) {
+          setUserProfile(data as any)
+        } else {
+          setUserProfile(null)
+        }
       }
     })()
   }, [user])

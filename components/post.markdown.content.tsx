@@ -23,7 +23,7 @@ const PostContent = ({ post }: { post: Post }) => {
     }
     return (
         <div className="relative">
-            <button className="fixed top-2 right-10 border-slate-400 w-2 h-2 rounded-md"
+            <button className="absolute top-0 right-10 border-slate-400 w-16 h-10 rounded-md bg-blue-300"
                 onClick={() => {
                     setEditting(!editting)
                 }}

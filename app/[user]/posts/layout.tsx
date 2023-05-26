@@ -5,13 +5,5 @@ export default function PostList({
 }: {
     children: React.ReactNode;
 }) {
-    return (
-        <div className="">
-            <ul className="w-full">
-                {
-                    children
-                }
-            </ul>
-        </div>
-    )
+    return children
 }

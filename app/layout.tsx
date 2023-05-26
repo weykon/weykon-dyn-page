@@ -17,14 +17,14 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="en">
+    <html lang="en" className='dark'>
       <body>
-        <SupabaseProvider>
-          <TopBar />
-          <div className='pt-2'>
+        <div className='my-bg h-screen w-screen'>
+          <SupabaseProvider>
+            <TopBar />
             {children}
-          </div>
-        </SupabaseProvider>
+          </SupabaseProvider>
+        </div>
       </body>
     </html>
   );

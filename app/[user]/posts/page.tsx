@@ -14,14 +14,20 @@ export const revalidate = 0;
 export default async function PostListPage(props: Props) {
     const supabase = getSupabase()
     const { data: userdata } = await supabase.auth.getUser();
-    const { data: posts } = await supabase.from('posts').select('id,title,created_at').limit(5)
-        .eq('owner', userdata.user?.id);
-    console.log('posts', props.params)
+    const { data: posts } = await supabase.from('posts').select('id,title,created_at,owner')
+        .eq('owner', userdata.user!.id).limit(5)
     return (
-        <div className="justify-center items-center text-center">
-            <p>this is posts list page</p>
-            <Link className="border-2 border-black rounded-md mt-10"
-                href={{ pathname: `${props.params.user}/posts/new` }} >new post</Link>
+        <div className="justify-center items-center text-center mt-8 flex flex-col">
+            <p className=" text-lg">this is posts list page</p>
+            <div className="border-2 border-black rounded-md mt-10 dark:border-yellow-50 h-14 w-32 flex justify-center items-center">
+                <Link
+                    className="w-full h-full justify-center items-center flex"
+                    href={{ pathname: `${props.params.user}/posts/new` }}
+                >
+                    new post
+                </Link>
+            </div>
+
             {/* <a href={`${props.params.user}/posts/new`}>new posts</a> */}
             <PostList posts={posts ?? []} />
         </div>
