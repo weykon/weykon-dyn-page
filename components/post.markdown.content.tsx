@@ -23,7 +23,7 @@ const PostContent = ({ post }: { post: Post }) => {
     }
     return (
         <div className="relative">
-            <button className="absolute top-0 right-10 border-slate-400 w-16 h-10 rounded-md bg-blue-300"
+            <button className="absolute top-0 right-10 ring-2 w-16 h-10 rounded-md bg-slate-200 ring-slate-400"
                 onClick={() => {
                     setEditting(!editting)
                 }}
@@ -34,7 +34,7 @@ const PostContent = ({ post }: { post: Post }) => {
                 editting ?
                     <EditToolPostContent post={post ?? {}} saveOrCancel={saveOrCancel} />
                     :
-                    <Markdown className='pt-2'>
+                    <Markdown className='pt-10 text-left px-20'>
                         {post?.content ?? ''}
                     </Markdown>
             }

@@ -39,7 +39,7 @@ export const SignIn = () => {
                 </>
                 :
                 <div className="">
-                    <form action={onSubmitIn} className='flex flex-col'   >
+                    <form action={onSubmitIn} className='flex flex-col'  >
                         <input type="email" className="border-2 dark:bg-slate-400" name={'email'} />
                         <input type="password" className="border-2 dark:bg-slate-400" name={'password'} />
                         <button type='submit'>OK</button>
@@ -77,8 +77,8 @@ export const SignUp = () => {
     return (
         <div className="">
             <form action={onSubmitUp} className='flex flex-col '>
-                <input type="email" className="border-2" name={'email'} />
-                <input type="password" className="border-2" name={'password'} />
+                <input type="email" className="border-2 dark:bg-slate-400" name={'email'} />
+                <input type="password" className="border-2 dark:bg-slate-400" name={'password'} />
                 <button type='submit'>Join in</button>
             </form>
         </div>

@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className='dark'>
       <body>
-        <div className='my-bg h-screen w-screen'>
+        <div className='my-bg h-screen w-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
           <SupabaseProvider>
             <TopBar />
             {children}

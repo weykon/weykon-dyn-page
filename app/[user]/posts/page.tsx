@@ -1,6 +1,7 @@
 import PostList from "@/components/post.list";
 import { getSupabase } from "@/server.supabse";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type Props = {
     params: {
@@ -14,6 +15,10 @@ export const revalidate = 0;
 export default async function PostListPage(props: Props) {
     const supabase = getSupabase()
     const { data: userdata } = await supabase.auth.getUser();
+    console.log(userdata)
+    if(!userdata.user){
+        notFound();
+    }
     const { data: posts } = await supabase.from('posts').select('id,title,created_at,owner')
         .eq('owner', userdata.user!.id).limit(5)
     return (
