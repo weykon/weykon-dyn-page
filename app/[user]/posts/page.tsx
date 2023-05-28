@@ -15,12 +15,12 @@ export const revalidate = 0;
 export default async function PostListPage(props: Props) {
     const supabase = getSupabase()
     const { data: userdata } = await supabase.auth.getUser();
-    console.log(userdata)
+
     if(!userdata.user){
         notFound();
     }
     const { data: posts } = await supabase.from('posts').select('id,title,created_at,owner')
-        .eq('owner', userdata.user!.id).limit(5)
+        .eq('owner', userdata.user!.id)
     return (
         <div className="justify-center items-center text-center mt-8 flex flex-col">
             <p className=" text-lg">this is posts list page</p>
