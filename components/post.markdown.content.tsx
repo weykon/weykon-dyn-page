@@ -16,7 +16,12 @@ const PostContent = ({ post }: { post: Post }) => {
         if (way === 'cancel') {
             setEditting(false)
         } else if (way === 'save') {
-            const result = await supabase.from('posts').update({ content: value }).eq('id', post?.id ?? '')
+            const result = await supabase.from('posts')
+                .update({
+                    content: value,
+                    modified_at: new Date().toUTCString()
+                })
+                .eq('id', post?.id ?? '')
             setEditting(false)
             router.refresh();
         }
@@ -34,7 +39,7 @@ const PostContent = ({ post }: { post: Post }) => {
                 editting ?
                     <EditToolPostContent post={post ?? {}} saveOrCancel={saveOrCancel} />
                     :
-                    <Markdown className='pt-10 text-left px-20'>
+                    <Markdown className='pt-10 text-left px-10'>
                         {post?.content ?? ''}
                     </Markdown>
             }
