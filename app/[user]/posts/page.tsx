@@ -36,9 +36,8 @@ export default async function PostListPage(props: Props) {
         .range(from, to);
 
     return (
-        <div className="justify-center items-center text-center mt-8 flex flex-col">
-            <p className=" text-lg">this is posts list page</p>
-            <div className="border-2 border-black rounded-md mt-10 dark:border-yellow-50 h-14 w-32 flex justify-center items-center">
+        <div className="justify-center items-center text-center mt-2 flex flex-col">
+            <div className="border-2 border-black rounded-md mt-2 dark:border-yellow-50 h-14 w-32 flex justify-center items-center">
                 <Link
                     className="w-full h-full justify-center items-center flex"
                     href={{ pathname: `${props.params.user}/posts/new` }}
@@ -49,13 +48,10 @@ export default async function PostListPage(props: Props) {
             <ul className="w-full text-left">
                 {
                     posts?.map((post: any) => (
-                        <a href={`posts/${post.id}`} key={post.id} >
-                            <li
-                                className="dark:hover:bg-slate-600 hover:bg-slate-300 my-5 border-zinc-300 rounded-lg border-2 mx-24 p-6"
-                            >
-                                <p className="font-semibold text-xl">
-                                    {post.title}
-                                </p>
+                        <a href={`posts/${post.id}`} key={post.id} className='flex justify-center'>
+                            <li className="block max-w-sm p-6 bg-white border my-5 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
+                                <p className="font-normal text-gray-700 dark:text-gray-400 w-72">{post.summary ?? ''}</p>
                                 <p className="text-right mt-8">
                                     {new Date(post.created_at).toLocaleString()}
                                 </p>
@@ -93,4 +89,3 @@ const getPagination = (page: number, size: number) => {
     const to = page ? from + size - 1 : size - 1
     return { from, to }
 }
-
