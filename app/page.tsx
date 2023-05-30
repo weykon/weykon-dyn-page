@@ -29,7 +29,7 @@ export default async function ServerComponent() {
       </div>
       <div className="flex flex-col justify-center items-center text-left justify-items-center w-full py-2">
         <div className="flex flex-col justify-start pt-10 pb-5 mx-5 text-sm">
-          <p>If you're interested in my work, please check out my GitHub profile.  <u><a href="https://github.com/weykon">go!</a></u></p>
+          <p>If you&apos;re interested in my work, please check out my GitHub profile.  <u><a href="https://github.com/weykon">go!</a></u></p>
           <p>if you want to contact me, send me a email. <u><a href="mailto:weykon@qq.com">weykon@qq.com</a></u></p>
         </div>
       </div>
