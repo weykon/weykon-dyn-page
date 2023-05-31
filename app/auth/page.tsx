@@ -6,14 +6,14 @@ const AuthPage = () => {
     const [tab, setTab] = useState(0);
     return (
         <div className="justify-center w-full flex ">
-            <div className="w-26 h-30 rounded-md bg-slate-100  dark:bg-slate-600">
-                <div className="justify-around flex w-full">
+            <div className="w-26 h-30 ">
+                <div className="justify-around flex w-full h-12 rounded-t-lg bg-slate-100  dark:bg-slate-600">
                     <button onClick={() => setTab(0)}
-                        className={`${tab === 0 ? '' : 'blur-sm'} hover:blur-none transition-all duration-200`}
+                        className={`${tab === 0 ? '' : 'blur-sm'} hover:blur-none transition-all duration-200 w-full h-full`}
                     >
                         Sign In</button>
                     <button
-                        className={`${tab === 1 ? '' : 'blur-sm'} hover:blur-none transition-all duration-200`}
+                        className={`${tab === 1 ? '' : 'blur-sm'} hover:blur-none transition-all duration-200  w-full h-full`}
                         onClick={() => setTab(1)}
                     >
                         Sign Up

@@ -1,9 +1,9 @@
 import PostContent from "@/components/post.markdown.content";
 import { Database } from "@/lib/database.types";
+import { getSupabase } from "@/server.supabse";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { headers, cookies } from "next/headers";
 import Link from "next/link";
-
 
 type Props = {
     params: {
@@ -14,17 +14,14 @@ type Props = {
 
 const PostPage = async (props: Props) => {
 
-    const supabase = createServerComponentSupabaseClient<Database>({
-        headers,
-        cookies,
-    });
+    const supabase = getSupabase()
 
     const { data: post } = await supabase.from('posts').select('*').eq('id', props.params.id).single();
 
     const { data } = await supabase.auth.getSession();
 
     return (
-        <div className="text-center items-center justify-center w-full"> 
+        <div className="relative text-center items-center justify-center w-full h-full">
             {
                 data.session ?
                     <>
@@ -38,7 +35,11 @@ const PostPage = async (props: Props) => {
                         <p>Your had no permission to this post, please login</p>
                     </>
             }
-            <Link className={'fixed bottom-0 text-center justify-center'} href={`${props.params.user}/posts`}>back to Posts</Link>
+            <div className="absolute bottom-6 w-full justify-center flex">
+                <Link className={'text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'} href={`${props.params.user}/posts`}>
+                    back to Posts
+                </Link>
+            </div>
         </div>
     )
 }

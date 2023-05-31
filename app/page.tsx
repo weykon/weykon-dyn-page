@@ -1,18 +1,9 @@
-import { createServerComponentSupabaseClient, SupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { headers, cookies } from "next/headers";
-import type { Database } from "@/lib/database.types";
-import Link from "next/link";
-import SupabaseProvider from "@/components/supabase.provider";
-import TopBar from "@/components/top.bar";
-
-// do not cache this page
 export const revalidate = 0;
 
 export default async function ServerComponent() {
-
   return (
-    <div className='pt-2 justify-center items-center w-full text-center flex flex-col'>
-      <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+    <div className='relative pt-2 justify-center items-center w-full text-center flex flex-col flex-1 h-full'>
+      <div className="px-4 mx-auto max-w-screen-xl text-center lg:py-16 flex justify-center items-center flex-col">
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Explore the vast and wonderful world!</h1>
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">Welcome to my experimental blog! Register to view all posts, password-free and open source. All blog articles are only visible to logged-in users. Please refrain from writing personal data. Join me on my journey to improve my backend technology stack!</p>
         <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
@@ -27,7 +18,7 @@ export default async function ServerComponent() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center text-left justify-items-center w-full py-2">
+      <div className=" bottom-2 flex flex-col justify-center items-center text-left text-sm justify-items-center w-full py-2">
         <div className="flex flex-col justify-start pt-10 pb-5 mx-5 text-sm">
           <p>If you&apos;re interested in my work, please check out my GitHub profile.  <u><a href="https://github.com/weykon">go!</a></u></p>
           <p>if you want to contact me, send me a email. <u><a href="mailto:weykon@qq.com">weykon@qq.com</a></u></p>

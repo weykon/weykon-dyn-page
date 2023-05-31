@@ -34,12 +34,13 @@ export default async function PostListPage(props: Props) {
         .eq('owner', userdata.user!.id)
         .order('created_at', { ascending: false })
         .range(from, to);
+    console.log('should run once per request');
 
     return (
         <div className="justify-center items-center text-center mt-2 flex flex-col">
-            <div className="border-2 border-black rounded-md mt-2 dark:border-yellow-50 h-14 w-32 flex justify-center items-center">
+            <div className="border-2 border-black dark:bg-gray-800 rounded-md mt-2 dark:border-yellow-50 h-14 w-32 flex justify-center items-center">
                 <Link
-                    className="w-full h-full justify-center items-center flex"
+                    className="w-full h-full justify-center items-center flex dark:text-white"
                     href={{ pathname: `${props.params.user}/posts/new` }}
                 >
                     new post
@@ -70,7 +71,9 @@ export default async function PostListPage(props: Props) {
                             <li key={i}>
                                 <a href={`?p=${i + 1}`}
                                     className={`${current == i + 1 ? 'bg-neutral-200' : 'bg-white'} px-3 py-2 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
-                                >{i + 1}</a>
+                                >
+                                    {i + 1}
+                                </a>
                             </li>
                         ))
                     }
