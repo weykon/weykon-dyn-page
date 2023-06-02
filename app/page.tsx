@@ -1,3 +1,5 @@
+import Aitalk from "@/components/aitalk";
+
 export const revalidate = 0;
 
 export default async function ServerComponent() {
@@ -24,6 +26,7 @@ export default async function ServerComponent() {
           <p>if you want to contact me, send me a email. <u><a href="mailto:weykon@qq.com">weykon@qq.com</a></u></p>
         </div>
       </div>
+      <Aitalk />
     </div>
   );
 }

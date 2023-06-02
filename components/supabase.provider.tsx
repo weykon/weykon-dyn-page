@@ -14,13 +14,16 @@ export default function SupabaseProvider({
   const [supabase] = useState(() =>
     createBrowserSupabaseClient()
   );
+  const [session, setSession] = useState<Session | null>(null);
   const router = useRouter();
-  const user = useUser()
+  const user = useUser();
 
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("session", session)
+      setSession(session);
       router.refresh()
     });
 
@@ -30,7 +33,7 @@ export default function SupabaseProvider({
   }, [router, user, supabase]);
 
   return (
-    <SessionContextProvider supabaseClient={supabase} >
+    <SessionContextProvider supabaseClient={supabase} initialSession={session}>
       <UserProfileProvider>
         {children}
       </UserProfileProvider>
@@ -54,7 +57,7 @@ const UserProfileProvider = ({ children }: { children: React.ReactNode }) => {
   const user = useUser();
   useEffect(() => {
     (async () => {
-      if(user){
+      if (user) {
         const { data, error } = await supabase.from('users').select('*').eq('id', user?.id);
         if (!error) {
           setUserProfile(data as any)
