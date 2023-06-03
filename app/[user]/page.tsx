@@ -13,7 +13,7 @@ const UserProfilePage = async (props: Props) => {
 
     return (
         <div>
-            Hi, Welcome!
+            <p>Hi, Welcome!</p>
             {
                 user ?
                     <div>

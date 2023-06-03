@@ -6,12 +6,8 @@ export default function NewPost({
     children: React.ReactNode;
 }) {
     return (
-        <div className="">
-            <ul className="w-full">
-                {
-                    children
-                }
-            </ul>
-        </div>
+        {
+            children
+        }
     )
 }

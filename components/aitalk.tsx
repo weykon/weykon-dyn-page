@@ -9,7 +9,6 @@ function Aitalk() {
     return (
         <button className="w-28 h-20 bg-teal-600" onClick={async () => {
             const reqCtrl = new AbortController()
-
             fetchEventSource('https://aojptevubhpugssjpckf.functions.supabase.co/aisay',
                 {
                     method: "POST",

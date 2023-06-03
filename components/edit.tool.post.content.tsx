@@ -20,13 +20,14 @@ const EditToolPostContent = ({ post, saveOrCancel }: {
     const [value, setValue] = useState(post?.content ?? '');
 
     return (
-        <div className="">
-            <div className="container">
+        <div className="flex flex-col">
+            <div className="container flex justify-center pt-10">
                 <MDEditor
                     value={value}
                     onChange={(value?: string, event?: React.ChangeEvent<HTMLTextAreaElement>) => {
                         setValue(value ?? '')
                     }}
+                    preview="edit"
                 />
             </div>
             <div className="space-x-4 pl-4 pt-5 justify-end flex pr-4">

@@ -33,6 +33,7 @@ const NewUser = async () => {
     return (
         <>
             <form action={handleSubmit}>
+                <p>输入你的用户名</p>
                 <input type="text" className=" border-2 border-blue-300 bg-green-200" name='name' />
                 <button type="submit">OK</button>
             </form>

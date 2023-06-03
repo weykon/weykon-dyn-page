@@ -91,19 +91,6 @@ end;
 $function$
 ;
 
-CREATE OR REPLACE FUNCTION public.update_post_modified_at()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-BEGIN
-    UPDATE public.posts
-    SET modified_at = now()
-    WHERE id = NEW.id; 
-    RETURN NEW; 
-END;
-$function$
-;
-
 create policy "logged can get the posts"
 on "public"."posts"
 as permissive
@@ -144,8 +131,4 @@ for update
 to authenticated
 using ((auth.uid() = id))
 with check ((auth.uid() = id));
-
-
-CREATE TRIGGER update_posts_modified_at AFTER UPDATE ON public.posts FOR EACH ROW WHEN ((old.modified_at IS DISTINCT FROM new.modified_at)) EXECUTE FUNCTION update_post_modified_at();
-
 

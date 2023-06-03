@@ -13,7 +13,7 @@ type Props = {
 }
 
 // do not cache this page
-export const revalidate = 0;
+export const revalidate = 10;
 export default async function PostListPage(props: Props) {
     const perPage = 4;
     const supabase = getSupabase()
@@ -38,9 +38,9 @@ export default async function PostListPage(props: Props) {
 
     return (
         <div className="justify-center items-center text-center mt-2 flex flex-col">
-            <div className="border-2 border-black dark:bg-gray-800 rounded-md mt-2 dark:border-yellow-50 h-14 w-32 flex justify-center items-center">
+            <div className="bg-gradient-to-r from-gray-200 via-gray-300 to-gray-300 border-2  dark:bg-gray-800 rounded-md mt-2 dark:border-yellow-50 h-14 w-32 flex justify-center items-center shadow-md">
                 <Link
-                    className="w-full h-full justify-center items-center flex dark:text-white"
+                    className="w-full h-full justify-center items-center flex dark:text-white "
                     href={{ pathname: `${props.params.user}/posts/new` }}
                 >
                     new post
