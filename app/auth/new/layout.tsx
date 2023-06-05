@@ -5,12 +5,5 @@ export default function AuthPage({
 }: {
     children: React.ReactNode;
 }) {
-    return (
-        <div className="">
-            {
-                children
-            }
-        </div>
-    )
-
+    return children
 }

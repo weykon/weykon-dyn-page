@@ -17,7 +17,7 @@ export default function SupabaseProvider({
   const [session, setSession] = useState<Session | null>(null);
   const router = useRouter();
   const user = useUser();
-
+  
   useEffect(() => {
     const {
       data: { subscription },

@@ -1,30 +1,27 @@
-'use client'
-import { SignIn, SignUp } from "@/components/sign";
-import { useState } from "react";
+import { getSupabase } from "@/server.supabse";
+import LoginPage from "./login";
+import { notFound, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
-const AuthPage = () => {
-    const [tab, setTab] = useState(0);
-    return (
-        <div className="justify-center w-full flex ">
-            <div className="w-26 h-30 ">
-                <div className="justify-around flex w-full h-12 rounded-t-lg bg-slate-100  dark:bg-slate-600">
-                    <button onClick={() => setTab(0)}
-                        className={`${tab === 0 ? '' : 'blur-sm'} hover:blur-none transition-all duration-200 w-full h-full`}
-                    >
-                        Sign In</button>
-                    <button
-                        className={`${tab === 1 ? '' : 'blur-sm'} hover:blur-none transition-all duration-200  w-full h-full`}
-                        onClick={() => setTab(1)}
-                    >
-                        Sign Up
-                    </button>
-                </div>
-                <div>
-                    {tab === 0 && <SignIn />}
-                    {tab === 1 && <SignUp />}
-                </div>
+export default async function AuthPage() {
+    const supabase = getSupabase()
+    const { session } = (await supabase.auth.getSession()).data
+
+    if (!session) {
+        return (
+            <div className="w-8/12 flex flex-col items-center">
+                <h1>Hello Page Auth</h1>
+                <LoginPage />
             </div>
-        </div>
-    )
+        );
+    }
+
+    const { data, error } = await supabase.from('users').select('*').eq('id', session?.user?.id).single();
+
+    if (error) {
+        notFound()
+    } else {
+        redirect(`/${data.name}`)
+    }
+
 }
-export default AuthPage;

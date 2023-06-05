@@ -5,9 +5,5 @@ export default function NewPost({
 }: {
     children: React.ReactNode;
 }) {
-    return (
-        {
-            children
-        }
-    )
+    return children
 }

@@ -39,10 +39,13 @@ const PostContent = ({ post }: { post: Post }) => {
                 editting ?
                     <EditToolPostContent post={post ?? {}} saveOrCancel={saveOrCancel} />
                     :
+                    <pre>
                         <Markdown className='pt-10 text-left px-10 whitespace-pre-wrap break-words'
+                        
                         >
                             {post?.content ?? ''}
                         </Markdown>
+                    </pre>
             }
 
         </div>
