@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { useRouter as NextRouter} from "next/navigation";
 import { Session } from "@supabase/supabase-js";
 import { SessionContextProvider, useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Database } from "@/lib/database.types";

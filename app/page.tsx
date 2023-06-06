@@ -9,7 +9,7 @@ export default async function ServerComponent() {
   const { session } = data;
 
   return (
-    <div className='relative pt-2 justify-center items-center w-full text-center flex flex-col flex-1 h-full'>
+    <div className='relative pt-2 justify-center items-center w-full text-center flex flex-col'>
       <div className="px-4 mx-auto max-w-screen-xl text-center lg:py-16 flex justify-center items-center flex-col">
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Explore the vast and wonderful world!</h1>
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">Welcome to my experimental blog! Register to view all posts, password-free and open source. All blog articles are only visible to logged-in users. Please refrain from writing personal data. Join me on my journey to improve my backend technology stack!</p>

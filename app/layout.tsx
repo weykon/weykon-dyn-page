@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'weykon blog',
   description: 'a test for myself',
-  manifest: 'site.webmanifest',
+  manifest: '/site.webmanifest',
   appleWebApp: {
     title: "Weykon's Blog",
     statusBarStyle: "default",
@@ -35,10 +35,10 @@ export default async function RootLayout({
           name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
         />
-        <link rel="manifest" href="/site.webmanifest"></link>
+        <link rel="manifest" href="/site.webmanifest" crossOrigin="use-credentials"></link>
       </head>
-      <body>
-        <div className='my-bg h-screen w-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
+      <body >
+        <div className='my-bg h-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
           <SupabaseProvider >
             {/* @ts-expect-error Async Server Component */}
             <Topbar session={session} />

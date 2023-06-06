@@ -1,10 +1,7 @@
 import PostContent from "@/components/post.markdown.content";
-import { Database } from "@/lib/database.types";
 import { getSupabase } from "@/server.supabse";
-import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { headers, cookies } from "next/headers";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import CountDownComp from "./Countdonw";
 
 type Props = {
@@ -35,15 +32,14 @@ const PostPage = async (props: Props) => {
                     :
                     <>
                         <p>Your had no permission to this post, please login</p>
-                        <CountDownComp/> 
+                        <CountDownComp />
                     </>
             }
-            <div className="absolute bottom-6 w-full justify-center flex">
+            <div className="mt-20 bottom-6 w-full justify-center flex">
                 <Link className={'text-white bg-gradient-to-r from-gray-300 via-gray-400 to-gray-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2'}
                     href={`/${props.params.user}/posts`}
-
                 >
-                    back to Posts
+                    Posts
                 </Link>
             </div>
         </div>

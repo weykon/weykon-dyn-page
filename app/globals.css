@@ -43,17 +43,9 @@ p {
         rgb(0, 0, 0) rgb(20, 20, 20))
   } */
 
-  div {
-    color: #fefefe;
-  }
-
   button {
     color: #fefefe;
   }
-}
-
-div {
-  color: #000;
 }
 
 .tabs {
