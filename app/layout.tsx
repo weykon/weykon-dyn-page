@@ -8,7 +8,7 @@ import Topbar from './topbar'
 const inter = Inter({ subsets: ['latin'] })
 
 
-export const metadata = {
+export const metadata  = {
   title: 'weykon blog',
   description: 'a test for myself',
   manifest: {
@@ -45,7 +45,6 @@ export default async function RootLayout({
           name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
         />
-        <link rel="manifest" href="/site.webmanifest"></link>
       </head>
       <body>
         <div className='my-bg h-screen w-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
