@@ -31,7 +31,7 @@ export default function AuthPage() {
     const grey = "inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
 
     return (
-        <div className='flex flex-col items-center h-full justify-center'>
+        <div className='flex flex-col items-center h-full justify-center transition-all'>
             <div className='flex justify-between w-auto'>
                 <button
                     className={`${id === 0 ? pick : grey}`}
@@ -48,9 +48,9 @@ export default function AuthPage() {
                     Sign Up
                 </button>
             </div>
-            {
-                id === 0 ?
-                    <div className="justify-center flex flex-col w-72 rounded-md overflow-hidden shadow-lg p-10">
+            <div className="justify-center flex flex-col w-72 rounded-md overflow-hidden shadow-lg p-10 transition-all duration-200">
+                {
+                    id === 0 ?
                         <form action={onSubmitIn}>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                             <input name={'email'} type="email" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
@@ -61,9 +61,7 @@ export default function AuthPage() {
                                 <svg aria-hidden="true" className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                             </button>
                         </form>
-                    </div >
-                    : id === 1 ?
-                        <div className='justify-center flex flex-col  w-72 rounded-md overflow-hidden shadow-lg p-10'>
+                        : id === 1 ?
                             <form action={handleSignUp} >
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                                 <input name={'email'} type="email" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
@@ -75,9 +73,9 @@ export default function AuthPage() {
                                     <svg aria-hidden="true" className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                 </button>
                             </form>
-                        </div>
-                        : <FixName />
-            }
+                            : <FixName />
+                }
+            </div >
         </div>
     )
 }
@@ -89,6 +87,7 @@ export function FixName() {
         const user = (await supabase.auth.getUser()).data.user;
         const { data, error } = await supabase.from('users').update({ name: name.toString() }).eq('id', user?.id);
         if (!error) {
+            
         }
     }
     return (

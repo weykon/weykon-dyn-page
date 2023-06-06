@@ -1,0 +1,15 @@
+{
+    "name": "Blog of weykon",
+    "short_name": "weykon1",
+    "icons": [
+      {
+        "src": "/icon512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+  }
