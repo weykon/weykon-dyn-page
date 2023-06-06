@@ -7,9 +7,25 @@ import Topbar from './topbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 export const metadata = {
   title: 'weykon blog',
   description: 'a test for myself',
+  manifest: {
+    "name": "Blog of weykon",
+    "short_name": "weykon",
+    "icons": [
+      {
+        "src": "/icon512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+  }
 }
 
 export default async function RootLayout({
