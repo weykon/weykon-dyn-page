@@ -1,6 +1,6 @@
 import { getSupabase } from '@/server.supabse';
 import { revalidatePath } from 'next/cache';
-import FixName from './FixName';
+import { FixName } from './Auth';
 
 export default async function NotFound() {
     const supabase = getSupabase();

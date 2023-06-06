@@ -1,17 +1,16 @@
 import { getSupabase } from "@/server.supabse";
-import LoginPage from "./login";
+import AuthPage from "./Auth";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-export default async function AuthPage() {
+export default async function AuthPageServer() {
     const supabase = getSupabase()
     const { session } = (await supabase.auth.getSession()).data
 
     if (!session) {
         return (
-            <div className="w-8/12 flex flex-col items-center">
-                <h1>Hello Page Auth</h1>
-                <LoginPage />
+            <div className="w-auto flex flex-col items-center">
+                <AuthPage />
             </div>
         );
     }

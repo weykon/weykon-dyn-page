@@ -24,6 +24,13 @@ export default async function RootLayout({
   }
   return (
     <html lang="en" className='dark'>
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        />
+        <link rel="manifest" href="/site.webmanifest"></link>
+      </head>
       <body>
         <div className='my-bg h-screen w-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
           <SupabaseProvider >
