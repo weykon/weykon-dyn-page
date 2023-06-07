@@ -20,7 +20,7 @@ const PostPage = async (props: Props) => {
     const { data } = await supabase.auth.getSession();
 
     return (
-        <div className="relative text-center items-center justify-center w-full h-full">
+        <div className="relative text-center items-center justify-center w-full h-full mt-5">
             {
                 data.session ?
                     <>

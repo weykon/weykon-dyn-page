@@ -38,13 +38,13 @@ export default async function RootLayout({
         <link rel="manifest" href="/site.webmanifest" crossOrigin="use-credentials"></link>
       </head>
       <body >
-        <div className='my-bg h-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
-          <SupabaseProvider >
-            {/* @ts-expect-error Async Server Component */}
-            <Topbar session={session} />
+        <SupabaseProvider >
+          {/* @ts-expect-error Async Server Component */}
+          <Topbar session={session} />
+          <div className='my-bg pt-10 flex justify-center h-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
             {children}
-          </SupabaseProvider>
-        </div>
+          </div>
+        </SupabaseProvider>
       </body>
     </html >
   );

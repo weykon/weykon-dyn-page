@@ -35,7 +35,7 @@ const UserProfilePage = async (props: Props) => {
                     </p>
                     <p>profile page</p>
                     <u>
-                        <a href={`${user.name}/posts`}>posts</a>
+                        <a href={`${user.name}/posts`} >posts</a>
                     </u>
                 </div>
 

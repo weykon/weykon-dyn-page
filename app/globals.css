@@ -23,8 +23,13 @@
       transparent,
       rgb(255, 255, 255)) rgb(214, 219, 220);
 }
-
 p {
+  color: #000;
+}
+a {
+  color: #000;
+}
+button { 
   color: #000;
 }
 
@@ -32,17 +37,14 @@ p {
   p {
     color: #fefefe;
   }
-
   a {
     color: #fefefe;
   }
-
   /* .my-bg {
     background: linear-gradient(to bottom,
         transparent,
         rgb(0, 0, 0) rgb(20, 20, 20))
   } */
-
   button {
     color: #fefefe;
   }

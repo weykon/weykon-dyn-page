@@ -1,6 +1,7 @@
 'use client'
 import '@/app/globals.css'
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function AuthPage() {
@@ -82,12 +83,13 @@ export default function AuthPage() {
 
 export function FixName() {
     const supabase = useSupabaseClient();
+    const router = useRouter();
     const handleChangeName = async (e: FormData) => {
         const { name } = Object.fromEntries(e.entries());
         const user = (await supabase.auth.getUser()).data.user;
         const { data, error } = await supabase.from('users').update({ name: name.toString() }).eq('id', user?.id);
         if (!error) {
-            
+            router.replace(`${name}`)
         }
     }
     return (
