@@ -8,24 +8,32 @@ export default function AuthPage() {
     const supabase = useSupabaseClient();
     const [loading, setLoading] = useState(false);
     const [id, setId] = useState<number>(0);
+    const [error, setError] = useState<Error | null>(null);
+
+    const logError = (error: Error | null) => {
+        if (!error) {
+            setError(null)
+        } else {
+            setError(error)
+        }
+    }
+    
     const onSubmitIn = async (formData: FormData) => {
         const { email, password } = Object.fromEntries(formData.entries());
         const { data: user, error } = await supabase.auth.signInWithPassword({
             email: email.toString(),
             password: password.toString(),
         });
-        console.log(user, error)
+        logError(error)
     }
 
     const handleSignUp = async (e: FormData) => {
         const { email, password } = Object.fromEntries(e.entries());
-        const { data, error } = await supabase.auth.signUp({
+        const { data: user, error } = await supabase.auth.signUp({
             email: email.toString(),
             password: password.toString(),
         })
-        if (!error) {
-
-        }
+        logError(error)
     }
 
     const pick = "inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"
@@ -77,6 +85,7 @@ export default function AuthPage() {
                             : <FixName />
                 }
             </div >
+            {error && <p className="text-red-500 text-xs mt-2">{error.message}</p>}
         </div>
     )
 }

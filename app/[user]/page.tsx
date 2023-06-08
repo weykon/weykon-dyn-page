@@ -16,10 +16,8 @@ const UserProfilePage = async (props: Props) => {
         redirect(`auth`)
     }
 
-    console.log('data', data)
     const { data: user, error } = await supabase.from('users').select('name').eq('name', props.params.user).single();
 
-    console.log(user)
     if (error) {
         notFound()
     }

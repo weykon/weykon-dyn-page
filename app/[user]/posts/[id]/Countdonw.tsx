@@ -1,14 +1,16 @@
 'use client'
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function CountDownComp() {
   const router = useRouter()
   useEffect(() => {
-    console.log('jump')
-    setTimeout(() => {
+    const time = setTimeout(() => {
       router.push('/auth')
     }, 2 * 1000)
+    return () => {
+      clearTimeout(time)
+    }
   }, [])
   return (
     <span className="countdown">

@@ -1,9 +1,6 @@
-import { getSupabase } from "@/server.supabse";
 import { Session } from "@supabase/supabase-js";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import SignOut from "./signout";
+import SignOut from "../signout";
 
 export default async function Topbar({ session }: { session: Session }) {
     return (

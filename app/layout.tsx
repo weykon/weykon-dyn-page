@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import SupabaseProvider from '../components/supabase.provider'
 import { getSupabase } from '@/server.supabse'
 import { revalidatePath } from 'next/cache'
-import Topbar from './topbar'
+import Topbar from './@topbar/page'
 import { Metadata } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
 }
-
+export const revalidate = 5*60;
 export default async function RootLayout({
   children,
 }: {
@@ -35,9 +35,9 @@ export default async function RootLayout({
           name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
         />
-        <link rel="manifest" href="/site.webmanifest" crossOrigin="use-credentials"></link>
+        <link rel="manifest" href="/site.webmanifest"></link>
       </head>
-      <body >
+      <body>
         <SupabaseProvider >
           {/* @ts-expect-error Async Server Component */}
           <Topbar session={session} />
@@ -46,6 +46,6 @@ export default async function RootLayout({
           </div>
         </SupabaseProvider>
       </body>
-    </html >
+    </html>
   );
 }

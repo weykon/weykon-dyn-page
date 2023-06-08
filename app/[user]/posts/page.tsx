@@ -11,9 +11,7 @@ type Props = {
         p: string,
     }
 }
-
-// do not cache this page
-export const revalidate = 10;
+export const revalidate = 5 * 60;
 export default async function PostListPage(props: Props) {
     const perPage = 4;
     const supabase = getSupabase()
@@ -52,6 +50,9 @@ export default async function PostListPage(props: Props) {
                             <li className="block max-w-sm p-6 bg-white border my-5 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
                                 <p className="font-normal text-gray-700 dark:text-gray-400 w-72">{post.summary ?? ''}</p>
+                                <form action="">
+                                    <button type='submit' className="text-gray-500 dark:text-gray-200">generate summary by GPT</button>
+                                </form>
                                 <p className="text-right mt-8">
                                     {new Date(post.created_at).toLocaleString()}
                                 </p>
