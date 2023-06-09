@@ -1,7 +1,7 @@
+import AskSummary from "@/components/aitalk";
 import { getSupabase } from "@/server.supabse";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 type Props = {
     params: {
@@ -46,18 +46,17 @@ export default async function PostListPage(props: Props) {
             <ul className="w-full text-left">
                 {
                     posts?.map((post: any) => (
-                        <a href={`posts/${post.id}`} key={post.id} className='flex justify-center'>
-                            <li className="block max-w-sm p-6 bg-white border my-5 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
-                                <p className="font-normal text-gray-700 dark:text-gray-400 w-72">{post.summary ?? ''}</p>
-                                <form action="">
-                                    <button type='submit' className="text-gray-500 dark:text-gray-200">generate summary by GPT</button>
-                                </form>
-                                <p className="text-right mt-8">
-                                    {new Date(post.created_at).toLocaleString()}
-                                </p>
-                            </li>
-                        </a>
+                        <li key={post.id} className="block max-w-sm p-6 bg-white border my-5 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
+                            <p className="font-normal text-gray-700 dark:text-gray-400 w-72">{post.summary ?? ''}</p>
+                            <a href={`posts/${post.id}`} className='flex justify-center w-5'>
+                                enter post
+                            </a>
+                            <AskSummary id={post.id} />
+                            <p className="text-right mt-8">
+                                {new Date(post.created_at).toLocaleString()}
+                            </p>
+                        </li>
                     ))
                 }
             </ul>
@@ -80,7 +79,7 @@ export default async function PostListPage(props: Props) {
                     <a href={`?p=${count == current ? count : current + 1}`} className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
                 </li>
             </ul>
-        </div>
+        </div >
     )
 }
 
