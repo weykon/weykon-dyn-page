@@ -40,8 +40,9 @@ function AskSummary({ id }: { id: string }) {
                                         reqCtrl.abort();
                                         return
                                     }
-                                    let text = JSON.parse(data).choices[0].text
-                                    setSummary(summary + text)
+                                    let text = JSON.parse(data).choices[0].text;
+
+                                    setSummary((pre) => pre + text)
                                 } catch (error) {
                                     console.log("aborting", error)
                                     reqCtrl.abort();

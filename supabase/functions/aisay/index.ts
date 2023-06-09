@@ -16,7 +16,10 @@ serve(async (req) => {
     return new Response("Not allowed", { status: 403, headers: corsHeaders });
   }
 
+  console.log('get req', req)
+
   let { query } = await req.json();
+
   if (!query) {
     query = "hi";
   }
