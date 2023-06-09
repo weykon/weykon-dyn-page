@@ -10,9 +10,7 @@ function AskSummary({ id }: { id: string }) {
 
     return (
         <button className="w-28 h-20 text-gray-500 dark:text-gray-200"
-            onClick={async (e) => {
-                e.stopPropagation()
-
+            onClick={async () => {
                 const { data, error } = await supabase.from('posts').select('content').eq('id', id).single();
                 if (!error) {
                     console.log(data)
@@ -25,7 +23,7 @@ function AskSummary({ id }: { id: string }) {
                                 "Content-Type": "application/json",
                                 'authorization': 'Bearer ' + session?.access_token,
                             },
-                            body: JSON.stringify({ name: prompt }),
+                            body: JSON.stringify({ query: prompt }),
                             signal: reqCtrl.signal,
                             async onopen(response) {
                                 console.log('onopen')
