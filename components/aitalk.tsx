@@ -2,11 +2,21 @@
 
 import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
 import { EventSourceMessage, fetchEventSource } from "@microsoft/fetch-event-source"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 function AskSummary({ id }: { id: string }) {
     const session = useSession()
     const [summary, setSummary] = useState<string>('')
+    const [isDone, setIsDone] = useState<boolean>(false)
+
     const supabase = useSupabaseClient()
+
+    useEffect(() => {
+        if (isDone) {
+            supabase.from('posts').update({ summary: summary }).eq('id', id).then((res) => {
+                console.log('res', res)
+            })
+        }
+    }, [isDone, summary])
 
     return (
         <button className="flex justify-center break-words h-16 w-full items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md  text-gray-500 dark:text-gray-200"
@@ -26,6 +36,7 @@ function AskSummary({ id }: { id: string }) {
                             signal: reqCtrl.signal,
                             async onopen(response) {
                                 console.log('onopen')
+                                setIsDone(false)
                                 return
                             },
                             onclose() {
@@ -37,9 +48,7 @@ function AskSummary({ id }: { id: string }) {
                                     const { data } = msg
                                     if (data === '[DONE]') {
                                         reqCtrl.abort();
-                                        supabase.from('posts').update({ summary: summary }).eq('id', id).then((res) => {
-                                            console.log('res', res)
-                                        })
+                                        setIsDone(true)
                                         return
                                     }
                                     let text = JSON.parse(data).choices[0].text;
