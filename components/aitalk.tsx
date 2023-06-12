@@ -3,9 +3,9 @@
 import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
 import { EventSourceMessage, fetchEventSource } from "@microsoft/fetch-event-source"
 import { useEffect, useState } from "react"
-function AskSummary({ id }: { id: string }) {
+function AskSummary({ id, init_summary }: { id: string, init_summary?: string }) {
     const session = useSession()
-    const [summary, setSummary] = useState<string>('')
+    const [summary, setSummary] = useState<string>(init_summary ?? '')
     const [isDone, setIsDone] = useState<boolean>(false)
 
     const supabase = useSupabaseClient()
@@ -19,7 +19,7 @@ function AskSummary({ id }: { id: string }) {
     }, [isDone, summary])
 
     return (
-        <button className="flex justify-center break-words h-16 w-full items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md  text-gray-500 dark:text-gray-200"
+        <button className=" w-72 flex justify-center break-words h-16 items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md  text-gray-500 dark:text-gray-200"
             onClick={async () => {
                 const { data, error } = await supabase.from('posts').select('content').eq('id', id).single();
                 if (!error) {
