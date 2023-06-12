@@ -41,7 +41,7 @@ export default async function RootLayout({
         <SupabaseProvider >
           {/* @ts-expect-error Async Server Component */}
           <Topbar session={session} />
-          <div className='my-bg pt-10 flex justify-center h-screen dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
+          <div className='my-bg pt-10 flex items-center justify-center h-full dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
             {children}
           </div>
         </SupabaseProvider>

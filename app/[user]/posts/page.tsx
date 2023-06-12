@@ -46,21 +46,21 @@ export default async function PostListPage(props: Props) {
             <ul className="w-full text-left">
                 {
                     posts?.map((post: any) => (
-                        <li key={post.id} className="block max-w-sm p-6 bg-white border my-5 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
-                            <p className="font-normal text-gray-700 dark:text-gray-400 w-72">{post.summary ?? ''}</p>
-                            <a href={`posts/${post.id}`} className='flex justify-center w-5'>
-                                enter post
-                            </a>
+                        <li key={post.id} className=" gap-3 flex flex-col max-w-sm p-6 bg-white border my-5 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+                            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
+                            <p className="font-normal text-gray-700 dark:text-gray-400 w-72 ">{post.summary ?? ''}</p>
                             <AskSummary id={post.id} />
-                            <p className="text-right mt-8">
+                            <a href={`posts/${post.id}`} className='flex justify-center h-14 w-32 items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md self-end '>
+                                read
+                            </a>
+                            <p className="text-right ">
                                 {new Date(post.created_at).toLocaleString()}
                             </p>
                         </li>
                     ))
                 }
             </ul>
-            <ul className="inline-flex -space-x-px mt-5">
+            <ul className="inline-flex -space-x-px mt-5 mb-10">
                 <li>
                     <a href={`?p=${current == 1 ? 1 : current - 1}`} className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
                 </li>

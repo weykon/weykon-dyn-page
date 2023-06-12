@@ -9,11 +9,10 @@ function AskSummary({ id }: { id: string }) {
     const supabase = useSupabaseClient()
 
     return (
-        <button className="w-28 h-20 text-gray-500 dark:text-gray-200"
+        <button className="flex justify-center break-words h-16 w-full items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md  text-gray-500 dark:text-gray-200"
             onClick={async () => {
                 const { data, error } = await supabase.from('posts').select('content').eq('id', id).single();
                 if (!error) {
-                    console.log(data)
                     const prompt = `请你用20个字写一下这篇文章的概括，对应好他的语言，如果原文是英文就用英文回复，如果是中文就用中文,以下将是一段文章：${data.content}`
                     const reqCtrl = new AbortController()
                     fetchEventSource('https://aojptevubhpugssjpckf.functions.supabase.co/aisay',
@@ -38,6 +37,9 @@ function AskSummary({ id }: { id: string }) {
                                     const { data } = msg
                                     if (data === '[DONE]') {
                                         reqCtrl.abort();
+                                        supabase.from('posts').update({ summary: summary }).eq('id', id).then((res) => {
+                                            console.log('res', res)
+                                        })
                                         return
                                     }
                                     let text = JSON.parse(data).choices[0].text;

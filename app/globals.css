@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* :root {
+/* 
+:root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -17,12 +17,17 @@
   }
 } */
 
+body { 
+  background-color: #fefefe;
+}
+
 .my-bg {
   color: rgb(214, 219, 220);
   background: linear-gradient(to bottom,
       transparent,
       rgb(255, 255, 255)) rgb(214, 219, 220);
 }
+
 p {
   color: #000;
 }
@@ -45,6 +50,9 @@ button {
         transparent,
         rgb(0, 0, 0) rgb(20, 20, 20))
   } */
+  body { 
+    background-color: #334155;
+  }
   button {
     color: #fefefe;
   }
