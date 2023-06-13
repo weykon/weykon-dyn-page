@@ -2,6 +2,7 @@ import AskSummary from "@/components/aitalk";
 import { getSupabase } from "@/server.supabse";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import LocalTimeAtClient from "./client.local.time";
 
 type Props = {
     params: {
@@ -53,9 +54,9 @@ export default async function PostListPage(props: Props) {
                             <a href={`posts/${post.id}`} className='flex justify-center h-14 w-32 items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md self-end '>
                                 read
                             </a>
-                            <p className="text-right ">
-                                {new Date(post.created_at).toLocaleString()}
-                            </p>
+                            <div className="text-right ">
+                                <LocalTimeAtClient time={(post.created_at as string) ?? ''} />
+                            </div>
                         </li>
                     ))
                 }
