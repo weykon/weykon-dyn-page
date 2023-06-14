@@ -2,67 +2,86 @@
 
 import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
 import { EventSourceMessage, fetchEventSource } from "@microsoft/fetch-event-source"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 function AskSummary({ id, init_summary }: { id: string, init_summary?: string }) {
     const session = useSession()
     const [summary, setSummary] = useState<string>(init_summary ?? '')
-    const [isDone, setIsDone] = useState<boolean>(false)
-
+    const [isRequestDone, setIsRequestDone] = useState(false);
+    const reqCtrlRef = useRef<AbortController | null>(null)
     const supabase = useSupabaseClient()
 
     useEffect(() => {
-        if (isDone) {
+        if (isRequestDone && reqCtrlRef) {
             supabase.from('posts').update({ summary: summary }).eq('id', id).then((res) => {
                 console.log('res', res)
             })
         }
-    }, [isDone, summary])
+    }, [isRequestDone, summary])
 
+    const handleButtonClick = async () => {
+        // 取消上一个请求
+        if (reqCtrlRef.current) {
+            reqCtrlRef.current.abort();
+        }
+
+        // 重置 Summary
+        setSummary('');
+        setIsRequestDone(false);
+
+        // 发起新请求
+        const reqCtrl = new AbortController();
+        reqCtrlRef.current = reqCtrl;
+        try {
+            fetchEventSource('https://aojptevubhpugssjpckf.functions.supabase.co/aisay',
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        'authorization': 'Bearer ' + session?.access_token,
+                    },
+                    body: JSON.stringify({ id }),
+                    signal: reqCtrl.signal,
+                    async onopen(response) {
+                        console.log('onopen')
+                        setIsRequestDone(false);
+                        return
+                    },
+                    onclose() {
+                        console.log('onclose')
+                    },
+                    onmessage(msg: EventSourceMessage) {
+                        console.log('msg', msg)
+                        try {
+                            const { data } = msg
+                            if (data === '[DONE]') {
+                                reqCtrl.abort();
+                                setIsRequestDone(true);
+                                return
+                            } else {
+                                let text = JSON.parse(data).choices[0].text;
+                                setSummary((pre) => pre + text)
+                            }
+
+                        } catch (error) {
+                            console.log("aborting", error)
+                            reqCtrl.abort();
+                        }
+                    },
+                    onerror(err) {
+                        console.log('err', err)
+                    },
+                }
+            )
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
     return (
         <button className=" w-72 flex justify-center break-words h-16 items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md  text-gray-500 dark:text-gray-200"
-            onClick={async () => {
-                const reqCtrl = new AbortController()
-                fetchEventSource('https://aojptevubhpugssjpckf.functions.supabase.co/aisay',
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            'authorization': 'Bearer ' + session?.access_token,
-                        },
-                        body: JSON.stringify({ id }),
-                        signal: reqCtrl.signal,
-                        async onopen(response) {
-                            console.log('onopen')
-                            setIsDone(false)
-                            return
-                        },
-                        onclose() {
-                            console.log('onclose')
-                        },
-                        onmessage(msg: EventSourceMessage) {
-                            console.log('msg', msg)
-                            try {
-                                const { data } = msg
-                                if (data === '[DONE]') {
-                                    reqCtrl.abort();
-                                    setIsDone(true)
-                                    return
-                                }
-                                let text = JSON.parse(data).choices[0].text;
-
-                                setSummary((pre) => pre + text)
-                            } catch (error) {
-                                console.log("aborting", error)
-                                reqCtrl.abort();
-                            }
-                        },
-                        onerror(err) {
-                            console.log('err', err)
-                        },
-                    }
-                )
-            }}>
-            {summary === '' ? 'generate summary by GPT' : summary}
+            onClick={handleButtonClick}
+            disabled={!isRequestDone}
+        >
+            {isRequestDone ? (summary === '' ? 'generate summary by GPT' : summary) : 'Generating...'}
         </button>
     )
 }

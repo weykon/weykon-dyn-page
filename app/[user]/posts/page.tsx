@@ -35,7 +35,7 @@ export default async function PostListPage(props: Props) {
         .range(from, to);
 
     return (
-        <div className="justify-center place-self-start text-center mt-2 flex flex-col items-center">
+        <div className="justify-center items-center text-center mt-2 flex flex-col">
             <div className="bg-gradient-to-r from-gray-200 dark:from-gray-700 via-gray-300 dark:via-gray-800 to-gray-300 dark:to-gray-900 border-[1px] rounded-md mt-2 dark:border-gray-600 h-14 w-32 flex justify-center items-center shadow-md ">
                 <Link
                     className="w-full h-full justify-center items-center flex dark:text-white "

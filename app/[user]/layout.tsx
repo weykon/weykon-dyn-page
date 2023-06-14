@@ -5,9 +5,5 @@ export default function UserProfile({
 }: {
     children: React.ReactNode;
 }) {
-    return (
-        <>
-            {children}
-        </>
-    )
+    return children
 }
