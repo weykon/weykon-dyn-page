@@ -44,12 +44,11 @@ export default async function PostListPage(props: Props) {
                     new post
                 </Link>
             </div>
-            <ul className="w-full text-left">
+            <ul>
                 {
                     posts?.map((post: any) => (
                         <li key={post.id} className=" gap-3 flex flex-col max-w-sm p-6 bg-white border my-5 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
                             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
-                            {/* <p className="font-normal text-gray-700 dark:text-gray-400 w-72 ">{post.summary ?? ''}</p> */}
                             <AskSummary id={post.id} init_summary={post.summary} />
                             <a href={`posts/${post.id}`} className='flex justify-center h-14 w-32 items-center shadow-md bg-gray-200 dark:bg-gray-600 rounded-md self-end '>
                                 read
