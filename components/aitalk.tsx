@@ -85,7 +85,9 @@ function AskSummary({ id, init_summary }: { id: string, init_summary?: string })
             onClick={handleButtonClick}
             disabled={!isRequestDone}
         >
-            {isRequestDone ? (summary === '' ? 'generate summary by GPT' : summary) : 'Generating...'}
+            {
+                summary === '' ? 'generate summary by GPT' : summary
+            }
         </button>
     )
 }
