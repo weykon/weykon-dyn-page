@@ -1,5 +1,3 @@
-
-
 const NotFound = async() => {
     return (
         <div className="text-center mt-10 text-lg">

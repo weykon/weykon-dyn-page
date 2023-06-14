@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 function AskSummary({ id, init_summary }: { id: string, init_summary?: string }) {
     const session = useSession()
     const [summary, setSummary] = useState<string>(init_summary ?? '')
-    const [isRequestDone, setIsRequestDone] = useState(false);
+    const [isRequestDone, setIsRequestDone] = useState(true);
     const reqCtrlRef = useRef<AbortController | null>(null)
     const supabase = useSupabaseClient()
 
@@ -48,9 +48,10 @@ function AskSummary({ id, init_summary }: { id: string, init_summary?: string })
                     },
                     onclose() {
                         console.log('onclose')
+                        setIsRequestDone(true);
+                        reqCtrl.abort();
                     },
                     onmessage(msg: EventSourceMessage) {
-                        console.log('msg', msg)
                         try {
                             const { data } = msg
                             if (data === '[DONE]') {
@@ -69,6 +70,9 @@ function AskSummary({ id, init_summary }: { id: string, init_summary?: string })
                     },
                     onerror(err) {
                         console.log('err', err)
+                        setSummary(`something ran error: ${err}`);
+                        reqCtrl.abort();
+                        setIsRequestDone(true);
                     },
                 }
             )
