@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
 }
-export const revalidate = 5 * 60;
+export const revalidate =   60;
 export default async function RootLayout({
   children,
 }: {

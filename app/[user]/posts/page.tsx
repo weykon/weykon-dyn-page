@@ -12,13 +12,13 @@ type Props = {
         p: string,
     }
 }
-export const revalidate = 5 * 60;
+export const revalidate = 60
 
 export default async function PostListPage(props: Props) {
     const perPage = 4;
-    const supabase = getSupabase()
+    const supabase = getSupabase();
     const { data: userdata } = await supabase.auth.getUser();
-    
+
     if (!userdata.user) {
         notFound();
     }

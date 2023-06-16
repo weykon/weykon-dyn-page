@@ -12,6 +12,7 @@ export default function CountDownComp() {
       clearTimeout(time)
     }
   }, [])
+  
   return (
     <span className="countdown">
       2 seconds later jump to login in page

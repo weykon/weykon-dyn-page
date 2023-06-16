@@ -2,13 +2,21 @@
 import '@/app/globals.css'
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { redirect, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function AuthPage() {
     const supabase = useSupabaseClient();
     const [loading, setLoading] = useState(false);
     const [id, setId] = useState<number>(0);
     const [error, setError] = useState<Error | null>(null);
+    const [defaultEmail, setDefaultEmail] = useState<string>('');
+
+    useEffect(() => {
+        const history_account =  localStorage.getItem('account-email')
+        if(history_account){
+            setDefaultEmail(history_account)
+        }
+    }, [])
 
     const logError = (error: Error | null) => {
         if (!error) {
@@ -24,6 +32,9 @@ export default function AuthPage() {
             email: email.toString(),
             password: password.toString(),
         });
+        if (!error) {
+            localStorage.setItem('account-email', email.toString())
+        }
         logError(error)
     }
 
@@ -62,7 +73,7 @@ export default function AuthPage() {
                     id === 0 ?
                         <form action={onSubmitIn}>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                            <input name={'email'} type="email" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
+                            <input name={'email'} type="email" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" defaultValue={defaultEmail} />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Password</label>
                             <input name={'password'} type="password" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="***" />
                             {loading ? <button disabled type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center">

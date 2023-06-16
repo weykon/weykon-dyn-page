@@ -8,6 +8,7 @@ type Props = {
         user: string
     }
 }
+export const revalidate = 60
 const UserProfilePage = async (props: Props) => {
     const supabase = getSupabase()
     const { data } = await supabase.auth.getSession()
