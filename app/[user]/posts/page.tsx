@@ -1,8 +1,9 @@
 import AskSummary from "@/components/aitalk";
-import { getSupabase } from "@/server.supabse";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import LocalTimeAtClient from "./client.local.time";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 type Props = {
     params: {
@@ -16,7 +17,7 @@ export const revalidate = 60
 
 export default async function PostListPage(props: Props) {
     const perPage = 4;
-    const supabase = getSupabase();
+    const supabase = createServerComponentClient({cookies})
     const { data: userdata } = await supabase.auth.getUser();
 
     if (!userdata.user) {

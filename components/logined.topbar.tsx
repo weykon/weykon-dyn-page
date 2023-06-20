@@ -1,9 +1,10 @@
-import { getSupabase } from "@/server.supabse"
+import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 export default function LoginedTopbar() {
     const handleSubmit = async () => {
         'use server'
-        const supabase = getSupabase()
+        const supabase = createServerActionClient({ cookies })
         const { error } = await supabase.auth.signOut();
         console.log('sign out error ? ', error)
     }

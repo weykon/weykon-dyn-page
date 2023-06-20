@@ -7,33 +7,51 @@ export type Json =
   | Json[]
 
 export interface Database {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          operationName?: string
-          query?: string
-          variables?: Json
-          extensions?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
+      ai_user_use: {
+        Row: {
+          can_use: boolean | null
+          id: string
+        }
+        Insert: {
+          can_use?: boolean | null
+          id: string
+        }
+        Update: {
+          can_use?: boolean | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_user_use_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      documents: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          id: number
+          metadata: Json | null
+        }
+        Insert: {
+          content?: string | null
+          embedding?: string | null
+          id?: number
+          metadata?: Json | null
+        }
+        Update: {
+          content?: string | null
+          embedding?: string | null
+          id?: number
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           content: string | null
@@ -41,6 +59,7 @@ export interface Database {
           id: string
           modified_at: string | null
           owner: string | null
+          summary: string | null
           title: string | null
         }
         Insert: {
@@ -49,6 +68,7 @@ export interface Database {
           id?: string
           modified_at?: string | null
           owner?: string | null
+          summary?: string | null
           title?: string | null
         }
         Update: {
@@ -57,193 +77,170 @@ export interface Database {
           id?: string
           modified_at?: string | null
           owner?: string | null
+          summary?: string | null
           title?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "posts_owner_fkey"
+            columns: ["owner"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      private_posts: {
+        Row: {
+          content: string | null
+          id: string
+          title: string | null
+        }
+        Insert: {
+          content?: string | null
+          id?: string
+          title?: string | null
+        }
+        Update: {
+          content?: string | null
+          id?: string
+          title?: string | null
+        }
+        Relationships: []
+      }
+      todos: {
+        Row: {
+          created_at: string | null
+          finished_time: string | null
+          id: string
+          is_finished: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          finished_time?: string | null
+          id: string
+          is_finished?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          finished_time?: string | null
+          id?: string
+          is_finished?: boolean | null
+        }
+        Relationships: []
       }
       users: {
         Row: {
           id: string
           name: string | null
           posts: Json[]
+          profile: string | null
         }
         Insert: {
           id: string
           name?: string | null
           posts?: Json[]
+          profile?: string | null
         }
         Update: {
           id?: string
           name?: string | null
           posts?: Json[]
+          profile?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "users_profile_fkey"
+            columns: ["profile"]
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
-      [_ in never]: never
+      decrypted_private_posts: {
+        Row: {
+          content: string | null
+          decrypted_content: string | null
+          id: string | null
+          title: string | null
+        }
+        Insert: {
+          content?: string | null
+          decrypted_content?: never
+          id?: string | null
+          title?: string | null
+        }
+        Update: {
+          content?: string | null
+          decrypted_content?: never
+          id?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-  storage: {
-    Tables: {
-      buckets: {
-        Row: {
-          allowed_mime_types: string[] | null
-          avif_autodetection: boolean | null
-          created_at: string | null
-          file_size_limit: number | null
-          id: string
-          name: string
-          owner: string | null
-          public: boolean | null
-          updated_at: string | null
-        }
-        Insert: {
-          allowed_mime_types?: string[] | null
-          avif_autodetection?: boolean | null
-          created_at?: string | null
-          file_size_limit?: number | null
-          id: string
-          name: string
-          owner?: string | null
-          public?: boolean | null
-          updated_at?: string | null
-        }
-        Update: {
-          allowed_mime_types?: string[] | null
-          avif_autodetection?: boolean | null
-          created_at?: string | null
-          file_size_limit?: number | null
-          id?: string
-          name?: string
-          owner?: string | null
-          public?: boolean | null
-          updated_at?: string | null
-        }
-      }
-      migrations: {
-        Row: {
-          executed_at: string | null
-          hash: string
-          id: number
-          name: string
-        }
-        Insert: {
-          executed_at?: string | null
-          hash: string
-          id: number
-          name: string
-        }
-        Update: {
-          executed_at?: string | null
-          hash?: string
-          id?: number
-          name?: string
-        }
-      }
-      objects: {
-        Row: {
-          bucket_id: string | null
-          created_at: string | null
-          id: string
-          last_accessed_at: string | null
-          metadata: Json | null
-          name: string | null
-          owner: string | null
-          path_tokens: string[] | null
-          updated_at: string | null
-          version: string | null
-        }
-        Insert: {
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          version?: string | null
-        }
-        Update: {
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          version?: string | null
-        }
-      }
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      can_insert_object: {
+      ivfflathandler: {
         Args: {
-          bucketid: string
-          name: string
-          owner: string
+          "": unknown
+        }
+        Returns: unknown
+      }
+      match_documents: {
+        Args: {
+          query_embedding: string
+          match_count: number
+          filter?: Json
+        }
+        Returns: {
+          id: number
+          content: string
           metadata: Json
-        }
-        Returns: undefined
+          similarity: number
+        }[]
       }
-      extension: {
+      vector_avg: {
         Args: {
-          name: string
+          "": number[]
         }
         Returns: string
       }
-      filename: {
+      vector_dims: {
         Args: {
-          name: string
+          "": string
+        }
+        Returns: number
+      }
+      vector_norm: {
+        Args: {
+          "": string
+        }
+        Returns: number
+      }
+      vector_out: {
+        Args: {
+          "": string
+        }
+        Returns: unknown
+      }
+      vector_send: {
+        Args: {
+          "": string
         }
         Returns: string
       }
-      foldername: {
+      vector_typmod_in: {
         Args: {
-          name: string
+          "": unknown[]
         }
-        Returns: string[]
-      }
-      get_size_by_bucket: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          size: number
-          bucket_id: string
-        }[]
-      }
-      search: {
-        Args: {
-          prefix: string
-          bucketname: string
-          limits?: number
-          levels?: number
-          offsets?: number
-          search?: string
-          sortcolumn?: string
-          sortorder?: string
-        }
-        Returns: {
-          name: string
-          id: string
-          updated_at: string
-          created_at: string
-          last_accessed_at: string
-          metadata: Json
-        }[]
+        Returns: number
       }
     }
     Enums: {
@@ -254,4 +251,3 @@ export interface Database {
     }
   }
 }
-

@@ -1,8 +1,9 @@
 import PostContent from "@/components/post.markdown.content";
-import { getSupabase } from "@/server.supabse";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CountDownComp from "./Countdonw";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 type Props = {
     params: {
@@ -13,7 +14,7 @@ type Props = {
 
 const PostPage = async (props: Props) => {
 
-    const supabase = getSupabase()
+    const supabase = createServerComponentClient({ cookies })
 
     const { data: post } = await supabase.from('posts').select('*').eq('id', props.params.id).single();
 

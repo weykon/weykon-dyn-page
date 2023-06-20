@@ -1,10 +1,10 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import SupabaseProvider from '../components/supabase.provider'
-import { getSupabase } from '@/server.supabse'
 import { revalidatePath } from 'next/cache'
 import Topbar from './@topbar/page'
 import { Metadata } from 'next'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,14 +17,15 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
 }
-export const revalidate =   60;
+export const revalidate = 60;
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = getSupabase();
+  const supabase = createServerComponentClient({cookies})
   const { session } = (await supabase.auth.getSession()).data;
+  
   if (!session) {
     revalidatePath(`/auth`)
   }
@@ -34,17 +35,15 @@ export default async function RootLayout({
         <meta
           name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-        />
+        />   
         <link rel="manifest" href="/site.webmanifest"></link>
       </head>
       <body>
-        <SupabaseProvider >
-          {/* @ts-expect-error Async Server Component */}
-          <Topbar session={session} />
-          <div className='my-bg pt-10 flex items-center justify-center h-full dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
-            {children}
-          </div>
-        </SupabaseProvider>
+        {/* @ts-expect-error Async Server Component */}
+        <Topbar/>
+        <div className='my-bg pt-10 flex items-center justify-center h-full dark:bg-gradient-to-b dark:from-black dark:to-slate-700'>
+          {children}
+        </div>
       </body>
     </html>
   );

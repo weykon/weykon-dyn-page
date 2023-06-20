@@ -1,5 +1,7 @@
-import { getSupabase } from "@/server.supabse";
+
+import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { redirect } from 'next/navigation'
 
 type Props = {
@@ -11,7 +13,7 @@ const NewPost = async (props: Props) => {
     const handleSubmit = async (e: FormData) => {
         'use server'
         const { name } = Object.fromEntries(e.entries());
-        const supabase = getSupabase();
+        const supabase = createServerActionClient({cookies})
         const user = (await supabase.auth.getUser()).data.user;
         const { data, error } = await supabase.from('posts').insert({
             title: name.toString(),

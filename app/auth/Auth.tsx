@@ -1,19 +1,21 @@
 'use client'
 import '@/app/globals.css'
+import { Database } from '@/lib/database.types';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function AuthPage() {
-    const supabase = useSupabaseClient();
+    const supabase = createClientComponentClient<Database>();
     const [loading, setLoading] = useState(false);
     const [id, setId] = useState<number>(0);
     const [error, setError] = useState<Error | null>(null);
     const [defaultEmail, setDefaultEmail] = useState<string>('');
 
     useEffect(() => {
-        const history_account =  localStorage.getItem('account-email')
-        if(history_account){
+        const history_account = localStorage.getItem('account-email')
+        if (history_account) {
             setDefaultEmail(history_account)
         }
     }, [])
@@ -76,6 +78,16 @@ export default function AuthPage() {
                             <input name={'email'} type="email" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" defaultValue={defaultEmail} />
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Password</label>
                             <input name={'password'} type="password" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="***" />
+                            <button className='mt-8 w-full text-white justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                                onClick={() => {
+                                    setLoading(true);
+                                    supabase.auth.signInWithOAuth({
+                                        provider: 'github',
+                                    })
+                                }}
+                            >
+                                Login with Github
+                            </button>
                             {loading ? <button disabled type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center">
                                 <svg aria-hidden="true" role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
@@ -98,6 +110,16 @@ export default function AuthPage() {
                                 <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">We’ll never share your details. Read our <a href="#" className="font-medium text-blue-600 hover:underline dark:text-blue-500">Privacy Policy</a>.</p>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Password</label>
                                 <input name={'password'} type="password" aria-describedby="helper-text-explanation" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="***" />
+                                <button className='mt-8 w-full text-white justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                                    onClick={() => {
+                                        setLoading(true);
+                                        supabase.auth.signInWithOAuth({
+                                            provider: 'github',
+                                        })
+                                    }}
+                                >
+                                    Login with Github
+                                </button>
                                 <button type="submit" className="mt-8 w-full text-white justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Join !
                                     <svg aria-hidden="true" className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
@@ -112,7 +134,7 @@ export default function AuthPage() {
 }
 
 export function FixName() {
-    const supabase = useSupabaseClient();
+    const supabase = createClientComponentClient<Database>();
     const router = useRouter();
     const handleChangeName = async (e: FormData) => {
         const { name } = Object.fromEntries(e.entries());

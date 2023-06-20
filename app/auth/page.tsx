@@ -1,10 +1,11 @@
-import { getSupabase } from "@/server.supabse";
 import AuthPage from "./Auth";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 export default async function AuthPageServer() {
-    const supabase = getSupabase()
+    const supabase = createServerComponentClient({cookies})
     const { session } = (await supabase.auth.getSession()).data
 
     if (!session) {

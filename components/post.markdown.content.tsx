@@ -1,17 +1,18 @@
 'use client'
 import { Database } from "@/lib/database.types";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Markdown from "react-markdown"
 import EditToolPostContent from "./edit.tool.post.content";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 
 type Post = Partial<Database['public']['Tables']['posts']['Row']>;
 const PostContent = ({ post }: { post: Post }) => {
     const [editting, setEditting] = useState(false)
-    const router = useRouter()
-    const supabase = useSupabaseClient()
+    const router = useRouter();
+    const supabase = createClientComponentClient<Database>();
+    
     const saveOrCancel = async (value: string, way: 'save' | 'cancel') => {
         if (way === 'cancel') {
             setEditting(false)

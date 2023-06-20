@@ -1,6 +1,5 @@
 import { Database } from "@/lib/database.types";
-import { getSupabase } from "@/server.supabse";
-import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { headers, cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
 }
 export const revalidate = 60
 const UserProfilePage = async (props: Props) => {
-    const supabase = getSupabase()
+    const supabase = createServerComponentClient({ cookies })
     const { data } = await supabase.auth.getSession()
 
     if (!data.session) {

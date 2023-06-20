@@ -1,9 +1,10 @@
-import { getSupabase } from '@/server.supabse';
 import { revalidatePath } from 'next/cache';
 import { FixName } from './Auth';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
 export default async function NotFound() {
-    const supabase = getSupabase();
+    const supabase = createServerComponentClient({cookies})
     const { session } = (await supabase.auth.getSession()).data;
     if (!session) {
         revalidatePath('/auth')

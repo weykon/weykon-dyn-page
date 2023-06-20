@@ -1,10 +1,11 @@
 import Aitalk from "@/components/aitalk";
-import { getSupabase } from "@/server.supabse";
+import {  createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 export const revalidate = 5;
 
 export default async function ServerComponent() {
-  const supabase = getSupabase()
+  const supabase = createServerComponentClient({cookies})
   const { data } = await supabase.auth.getSession();
   const { session } = data;
 
