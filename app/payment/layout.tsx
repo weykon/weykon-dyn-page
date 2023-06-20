@@ -25,7 +25,7 @@ export default async function PaymentLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const supabase = createServerComponentClient({cookies})
+    const supabase = createServerComponentClient({ cookies })
 
     const { data, error } = await supabase.auth.getSession()
     console.log(data, error)
@@ -47,7 +47,7 @@ export default async function PaymentLayout({
                 {
                     subscriptions.map((subscription) => {
                         return (
-                            <div className="flex flex-col items-center w-48 dark:bg-neutral-700 bg-neutral-300 rounded-xl p-6">
+                            <div key={subscription.name} className="flex flex-col items-center w-48 dark:bg-neutral-700 bg-neutral-300 rounded-xl p-6">
                                 <p>{subscription.name}</p>
                                 <p>{subscription.price}</p>
                                 <p>{subscription.description}</p>
