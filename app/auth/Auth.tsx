@@ -17,7 +17,7 @@ export default function AuthPage() {
     const [id, setId] = useState<AuthTab>(0);
     const [error, setError] = useState<Error | null>(null);
     const [defaultEmail, setDefaultEmail] = useState<string>('');
-
+const router = useRouter();
     useEffect(() => {
         const history_account = localStorage.getItem('account-email')
         if (history_account) {
@@ -43,6 +43,7 @@ export default function AuthPage() {
             localStorage.setItem('account-email', email.toString())
         }
         logError(error)
+        router.refresh()
     }
 
     const handleSignUp = async (e: FormData) => {
@@ -50,8 +51,12 @@ export default function AuthPage() {
         const { data: user, error } = await supabase.auth.signUp({
             email: email.toString(),
             password: password.toString(),
+            options: { 
+                emailRedirectTo: `${location.origin}/auth/callback}`
+            }
         })
         logError(error)
+        router.refresh()
     }
 
     const pick = "inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"

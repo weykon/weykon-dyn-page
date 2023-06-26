@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { revalidatePath } from 'next/cache'
-import Topbar from './@topbar/page'
+import Topbar from './(topbar)/topbar'
 import { Metadata } from 'next'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
@@ -21,12 +21,12 @@ export const revalidate = 60;
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode,
 }) {
   const supabase = createServerComponentClient({ cookies })
-  const { session } = (await supabase.auth.getSession()).data;
+  const { data: {session} } = await supabase.auth.getSession();
   const { data: user, error } = await supabase.from('users').select('name').eq('id', session?.user.id).single();
-  console.log('user', user)
+   
   if (!session) {
     revalidatePath(`/auth`)
   }

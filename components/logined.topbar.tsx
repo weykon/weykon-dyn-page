@@ -6,7 +6,6 @@ export default function LoginedTopbar() {
         'use server'
         const supabase = createServerActionClient({ cookies })
         const { error } = await supabase.auth.signOut();
-        console.log('sign out error ? ', error)
     }
     return (
         <div>

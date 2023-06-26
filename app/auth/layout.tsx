@@ -1,16 +1,16 @@
 import '@/app/globals.css'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import {redirect, notFound } from 'next/navigation';
+import { redirect, notFound } from 'next/navigation';
 
 export default async function AuthPage({
     children,
 }: {
     children: React.ReactNode,
 }) {
-    const supabase = createServerComponentClient({cookies})
-    
-    const { session } = (await supabase.auth.getSession()).data
+    const supabase = createServerComponentClient({ cookies })
+
+    const { data: { session } } = await supabase.auth.getSession()
 
     if (!session) {
         return (
@@ -24,6 +24,7 @@ export default async function AuthPage({
     if (error) {
         notFound()
     } else {
+        console.log('redirect to /user')
         redirect(`/${data.name}`)
     }
 }

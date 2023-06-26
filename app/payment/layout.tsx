@@ -28,7 +28,7 @@ export default async function PaymentLayout({
     const supabase = createServerComponentClient({ cookies })
 
     const { data, error } = await supabase.auth.getSession()
-    console.log(data, error)
+
     if (error !== null) {
         return (
             <div className="flex flex-col items-center">

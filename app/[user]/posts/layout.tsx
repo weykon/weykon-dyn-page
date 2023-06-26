@@ -1,6 +1,4 @@
-import '@/app/globals.css'
-
-export default function PostList({
+export default function PostListLayout({
     children,
 }: {
     children: React.ReactNode;

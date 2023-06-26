@@ -1,16 +1,16 @@
 'use client'
-
-import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
+import { useSession } from "@supabase/auth-helpers-react"
 import { EventSourceMessage, fetchEventSource } from "@microsoft/fetch-event-source"
 import { useEffect, useRef, useState } from "react"
 import { Database } from "@/lib/database.types"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+
 function AskSummary({ id, init_summary }: { id: string, init_summary?: string }) {
+    const supabase = createClientComponentClient<Database>()
     const session = useSession()
     const [summary, setSummary] = useState<string>(init_summary ?? '')
     const [isRequestDone, setIsRequestDone] = useState(true);
     const reqCtrlRef = useRef<AbortController | null>(null)
-    const supabase = createClientComponentClient<Database>()
 
     useEffect(() => {
         if (isRequestDone && reqCtrlRef) {
