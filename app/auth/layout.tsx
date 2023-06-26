@@ -1,15 +1,29 @@
 import '@/app/globals.css'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import {redirect, notFound } from 'next/navigation';
 
-export default function AuthPage({
+export default async function AuthPage({
     children,
 }: {
     children: React.ReactNode,
 }) {
-    return (
-        <div className='flex flex-1 items-center h-full w-full justify-center'>
-            {
-                children
-            }
-        </div>
-    )
+    const supabase = createServerComponentClient({cookies})
+    
+    const { session } = (await supabase.auth.getSession()).data
+
+    if (!session) {
+        return (
+            <div className="w-auto flex flex-col items-center">
+                {children}
+            </div>
+        );
+    }
+
+    const { data, error } = await supabase.from('users').select('*').eq('id', session?.user?.id).single();
+    if (error) {
+        notFound()
+    } else {
+        redirect(`/${data.name}`)
+    }
 }
