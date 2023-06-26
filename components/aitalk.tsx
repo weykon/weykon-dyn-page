@@ -7,7 +7,6 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 function AskSummary({ id, init_summary }: { id: string, init_summary?: string }) {
     const supabase = createClientComponentClient<Database>()
-    const session = useSession()
     const [summary, setSummary] = useState<string>(init_summary ?? '')
     const [isRequestDone, setIsRequestDone] = useState(true);
     const reqCtrlRef = useRef<AbortController | null>(null)
@@ -34,7 +33,8 @@ function AskSummary({ id, init_summary }: { id: string, init_summary?: string })
         const reqCtrl = new AbortController();
         reqCtrlRef.current = reqCtrl;
         try {
-            fetchEventSource('https://aojptevubhpugssjpckf.functions.supabase.co/aisay',
+            const { data: { session } } = await supabase.auth.getSession();
+            fetchEventSource('https://aojptevubhpugssjpckf.supabase.co/functions/v1/aisay',
                 {
                     method: "POST",
                     headers: {

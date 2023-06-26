@@ -9,7 +9,15 @@ import type MDEditorType from '@uiw/react-md-editor';
 
 const MDEditor = dynamic(
     () => import("@uiw/react-md-editor").then((mod) => mod.default),
-    { ssr: false }
+    {
+        ssr: false,
+        loading: () => (
+            <div className="w-full h-48 animate-pulse">
+                <p>Loading Editor...</p>
+            </div>
+        ),
+    },
+
 ) as typeof MDEditorType;
 
 type Post = Database["public"]["Tables"]["posts"]["Row"];
