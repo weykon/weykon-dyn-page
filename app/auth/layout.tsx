@@ -24,7 +24,6 @@ export default async function AuthPage({
     if (error) {
         notFound()
     } else {
-        console.log('redirect to /user')
         redirect(`/${data.name}`)
     }
 }

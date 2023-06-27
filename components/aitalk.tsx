@@ -42,9 +42,8 @@ function AskSummary({ id, init_summary }: { id: string, init_summary?: string })
                         'authorization': 'Bearer ' + session?.access_token,
                     },
                     body: JSON.stringify({ id }),
-                    signal: reqCtrl.signal,
+                    signal: reqCtrl.signal, 
                     async onopen(response) {
-                        console.log('onopen')
                         setIsRequestDone(false);
                         return
                     },

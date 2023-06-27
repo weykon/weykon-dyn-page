@@ -1,6 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import SelfMe from "./selfme"
 
 type Props = {
     params: {
@@ -34,6 +35,7 @@ const UserProfilePage = async (props: Props) => {
                     </u>
                 </div>
             }
+            <SelfMe user={props.params.user}/>
         </div >
     )
 }
