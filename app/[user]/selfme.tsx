@@ -25,7 +25,7 @@ export default function SelfMe({ user }: { user: string }) {
         reqCtrlRef.current = reqCtrl;
         try {
             const { data: { session } } = await supabase.auth.getSession();
-            fetchEventSource('https://aojptevubhpugssjpckf.supabase.co/functions/v1/aisay',
+            fetchEventSource('https://aojptevubhpugssjpckf.supabase.co/functions/v1/selfme',
                 {
                     method: "POST",
                     headers: {
