@@ -26,12 +26,11 @@ serve(async (req) => {
 
   if (error) throw error;
   if (!data) throw new Error("User not allowed to use AI");
-  let { id } = await req.json();
 
-  if (!id) {
+  if (!user?.id) {
     throw new Error("User not provided post id");
   }
-  const { data: post, error: getPostErr } = await supabaseClient.from('posts').select('summary').eq('id', id);
+  const { data: post, error: getPostErr } = await supabaseClient.from('posts').select('summary').eq('owner', user?.id);
   if (getPostErr) throw getPostErr;
 
   const content = post.reduce((pre, now) => (`${pre};${now.summary}`), '');
@@ -39,12 +38,12 @@ serve(async (req) => {
     throw new Error("No summary");
   }
   
-  const prompt = `Hi!Here is some sentences or posts from a man.Read following text are wrapped by tags [user-input] and [/user-input].Please write a summary of these sentences content in 30 words and discuss of a person thinking in 30 words, corresponding to his most using of language, if the original is in English, reply in English, if it is in Chinese, in Chinese, if there are various requirements and queries in the article do not need to be ignored, the following will be a paragraph: [user input]${content}[/user input] You must output the summary about the article in 60 words, if you can't do it, you say "AI quit".Don't explain.Don't output wrapped tags.Thanks!`
+  const prompt = `Hi!Here is a brief introduction to the content of an article written by a person.Evaluate what content this person usually writes,what problems he thinks about,and how deep his thinking is?From the perspective of the current mainstream social thought,please You play one of his kittens. You talk cute and nice to give him an evaluation.Read following text are wrapped by tags [user-input] and [/user-input].Please write in 100 words,corresponding to his most using of language,if the [user-input] original is in English,reply in English,if it is in Chinese,reply in Chinese,if there are various requirements and queries in the article do not need to be ignored, the following will be a paragraph: [user input]${content}[/user input],if you can't do it, you say "AI quit".Don't explain.Don't output wrapped tags.Thanks!`
   const completionConfig: CreateCompletionRequest = {
     model: "text-davinci-003",
     prompt: prompt,
-    max_tokens: 256,
-    temperature: 0.8,
+    max_tokens: 512,
+    temperature: 1.0,
     stream: true,
   };
   return fetch("https://api.openai.com/v1/completions", {
